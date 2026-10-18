@@ -1,0 +1,16 @@
+{
+  "name": "student-course-registration-system",
+  "version": "1.0.0",
+  "description": "Student Course Registration System — MERN Stack with Emedley Theme",
+  "scripts": {
+    "client": "npm --prefix client run dev",
+    "server": "npm --prefix server run dev",
+    "dev": "concurrently -n \"SERVER,CLIENT\" -c \"green,cyan\" \"npm --prefix server run dev\" \"npm --prefix client run dev\"",
+    "build": "npm --prefix client run build",
+    "seed": "npm --prefix server run seed",
+    "test": "npm --prefix server test"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
+}
