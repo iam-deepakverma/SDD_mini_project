@@ -23,17 +23,20 @@ app.use((req, res, next) => {
   next();
 });
 
-// Security rate limiter for authentication routes
+// Trust proxy for Render, Vercel, and reverse proxies
+app.set('trust proxy', 1);
+
+// Security rate limiter for authentication routes (extended window & capacity)
 const authLimiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 100, // limit each IP to 100 requests per windowMs
+  windowMs: 60 * 60 * 1000, // 60 minutes (1 hour)
+  max: 1000, // 1000 requests per window
   standardHeaders: true,
   legacyHeaders: false,
   message: {
     success: false,
-    message: 'Too many authentication attempts. Please try again after 15 minutes.',
+    message: 'Too many authentication attempts. Please try again after an hour.',
   },
-  skip: () => process.env.NODE_ENV === 'test',
+  skip: (req) => process.env.NODE_ENV === 'test' || req.path === '/me',
 });
 
 // Middleware configuration
