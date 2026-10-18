@@ -136,7 +136,7 @@ The portal automatically seeds realistic academic records on startup. You can si
 | 🎓 **Student (Eligible)** | Alex Mercer | `alex.student@emedley.edu` | `Password123!` | Student | Junior CS. Has completed `CS101`, `CS201`, `MATH201`. Eligible to register for `CS301` and `CS305`. |
 | ⚠️ **Student (Missing Prereq)** | Maya Chen | `maya.student@emedley.edu` | `Password123!` | Student | Sophomore CS. Has completed `CS101`, but **missing `CS201`**. Demonstrates prerequisite blocking on `CS301`. |
 | ⚡ **Student (High Credits)** | Jordan Hayes | `jordan.student@emedley.edu` | `Password123!` | Student | Senior CS. High completed credit load. Demonstrates credit ceiling warnings. |
-| 🛡️ **Administrator** | Sarah Lin | `admin@emedley.edu` | `Password123!` | Admin | Dean of Academic Registry. Full access to Admin Console, Course CRUD, Student Records, and Policy Settings. |
+
 
 ---
 
