@@ -6,7 +6,7 @@ import { connectDB, disconnectDB } from './config/db.js';
 import { Course } from './models/Course.js';
 import { seedDatabase } from '../scripts/seed.js';
 
-const PORT = 5002;
+const PORT = process.env.PORT || 5002;
 
 const startServer = async () => {
   try {
