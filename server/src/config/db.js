@@ -5,7 +5,7 @@ let mongoMemoryServer = null;
 
 export const connectDB = async (customUri = null) => {
   try {
-    const uri = customUri || process.env.MONGODB_URI;
+    const uri = process.env.MONGODB_URI;
 
     if (uri && uri.trim() !== '') {
       console.log(`[DB] Attempting connection to MongoDB at: ${uri.replace(/\/\/.*@/, '//<credentials>@')}`);
