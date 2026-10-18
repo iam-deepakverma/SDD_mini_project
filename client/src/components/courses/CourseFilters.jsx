@@ -15,9 +15,9 @@ export const CourseFilters = ({
   totalResults,
 }) => {
   return (
-    <div className="bg-white rounded-3xl p-5 border border-slate-100 shadow-sm mb-6 space-y-4">
+    <div className="bg-white rounded-2xl sm:rounded-3xl p-3.5 sm:p-5 border border-slate-100 shadow-sm mb-5 sm:mb-6 space-y-3 sm:space-y-4">
       {/* Top Filter Row: Search & Availability Pills */}
-      <div className="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3">
+      <div className="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-2.5 sm:gap-3">
         {/* Search */}
         <div className="relative flex-1">
           <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
@@ -26,12 +26,12 @@ export const CourseFilters = ({
             value={search}
             onChange={(e) => onSearchChange(e.target.value)}
             placeholder="Search by course code, title, professor name..."
-            className="w-full pl-10 pr-4 py-2.5 text-xs bg-slate-50 hover:bg-slate-100/60 focus:bg-white rounded-2xl border border-slate-200/80 focus:outline-none focus:ring-2 focus:ring-[#2E5A44]/20 focus:border-[#2E5A44] transition"
+            className="w-full pl-10 pr-4 py-2 sm:py-2.5 text-xs bg-slate-50 hover:bg-slate-100/60 focus:bg-white rounded-2xl border border-slate-200/80 focus:outline-none focus:ring-2 focus:ring-[#2E5A44]/20 focus:border-[#2E5A44] transition"
           />
         </div>
 
         {/* Availability Toggle Pills */}
-        <div className="flex items-center gap-1 bg-slate-100/80 p-1 rounded-2xl self-start md:self-auto">
+        <div className="flex items-center gap-1 bg-slate-100/80 p-1 rounded-2xl w-full sm:w-auto overflow-x-auto justify-around sm:justify-start shrink-0">
           {[
             { id: 'all', label: 'All Courses' },
             { id: 'available', label: 'Open Seats' },

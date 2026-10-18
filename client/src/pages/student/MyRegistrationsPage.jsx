@@ -100,17 +100,17 @@ export const MyRegistrationsPage = () => {
       </div>
 
       {/* Filter Tabs & Credit Stats */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-white p-4 rounded-3xl border border-slate-100 shadow-sm">
-        <div className="flex items-center gap-1 bg-slate-100/80 p-1 rounded-2xl">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-white p-3.5 sm:p-4 rounded-2xl sm:rounded-3xl border border-slate-100 shadow-sm">
+        <div className="flex items-center gap-1 bg-slate-100/80 p-1 rounded-2xl w-full sm:w-auto overflow-x-auto justify-around sm:justify-start">
           {[
             { id: 'registered', label: 'Active Enrolled' },
-            { id: 'cancelled', label: 'Dropped / Cancelled' },
+            { id: 'cancelled', label: 'Dropped' },
             { id: 'all', label: 'All History' },
           ].map((tab) => (
             <button
               key={tab.id}
               onClick={() => setStatusFilter(tab.id)}
-              className={`px-3.5 py-1.5 rounded-xl text-xs font-semibold transition ${
+              className={`flex-1 sm:flex-initial px-3 py-1.5 rounded-xl text-xs font-semibold transition text-center ${
                 statusFilter === tab.id
                   ? 'bg-white text-slate-800 shadow-xs'
                   : 'text-slate-500 hover:text-slate-800'
@@ -121,11 +121,11 @@ export const MyRegistrationsPage = () => {
           ))}
         </div>
 
-        <div className="flex items-center gap-3 text-xs">
+        <div className="flex items-center justify-between sm:justify-end gap-3 text-xs pt-2 sm:pt-0 border-t sm:border-t-0 border-slate-100">
           <span className="text-slate-500">
             Active Credits:{' '}
             <strong className="text-[#2E5A44] font-bold text-sm">
-              {activeCredits} Credits
+              {activeCredits} Cr
             </strong>
           </span>
           <span className="text-slate-300">•</span>
@@ -142,26 +142,26 @@ export const MyRegistrationsPage = () => {
       {isLoading ? (
         <div className="space-y-4">
           {[1, 2, 3].map((i) => (
-            <div key={i} className="bg-white rounded-3xl p-6 border border-slate-100 shadow-sm animate-pulse h-28" />
+            <div key={i} className="bg-white rounded-2xl sm:rounded-3xl p-4 sm:p-6 border border-slate-100 shadow-sm animate-pulse h-28" />
           ))}
         </div>
       ) : registrations.length === 0 ? (
-        <div className="bg-white rounded-3xl p-12 text-center border border-slate-100 shadow-sm">
-          <GraduationCap className="w-12 h-12 text-slate-300 mx-auto mb-3" />
+        <div className="bg-white rounded-2xl sm:rounded-3xl p-8 sm:p-12 text-center border border-slate-100 shadow-sm">
+          <GraduationCap className="w-10 h-10 sm:w-12 sm:h-12 text-slate-300 mx-auto mb-3" />
           <h3 className="font-bold text-slate-700 text-sm">No registrations found</h3>
           <p className="text-xs text-slate-400 mt-1 max-w-sm mx-auto">
             You do not have any registrations under the selected filter.
           </p>
         </div>
       ) : (
-        <div className="space-y-4">
+        <div className="space-y-3 sm:space-y-4">
           {registrations.map((reg) => {
             const isRegistered = reg.status === 'registered';
 
             return (
               <div
                 key={reg._id}
-                className="bg-white rounded-3xl p-6 border border-slate-100 shadow-sm hover:shadow-md transition flex flex-col md:flex-row md:items-center justify-between gap-4"
+                className="bg-white rounded-2xl sm:rounded-3xl p-4 sm:p-6 border border-slate-100 shadow-sm hover:shadow-md transition flex flex-col md:flex-row md:items-center justify-between gap-3 sm:gap-4"
               >
                 <div className="space-y-2">
                   <div className="flex items-center gap-2.5">

@@ -147,7 +147,7 @@ export const StudentDashboard = () => {
       )}
 
       {/* 2. Four Metric Cards (Directly matching reference image) */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-4">
         <StatCard
           icon={GraduationCap}
           iconBg="bg-[#FCEEE9]"
@@ -194,9 +194,9 @@ export const StudentDashboard = () => {
       </div>
 
       {/* 3. Middle Section: Credit Chart & Cart Quick Widget */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
         {/* Left 2 Cols: Credit Allocation Chart */}
-        <div className="lg:col-span-2 bg-white rounded-3xl p-6 border border-slate-100 shadow-sm">
+        <div className="lg:col-span-2 bg-white rounded-2xl sm:rounded-3xl p-4 sm:p-6 border border-slate-100 shadow-sm">
           <div className="flex items-center justify-between mb-4">
             <div>
               <h3 className="font-bold text-slate-800 text-base">Academic Credit Distribution</h3>
@@ -211,7 +211,7 @@ export const StudentDashboard = () => {
 
           <div className="h-56 w-full">
             <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={chartData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+              <BarChart data={chartData} margin={{ top: 10, right: 10, left: -25, bottom: 0 }}>
                 <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#F1F5F9" />
                 <XAxis dataKey="name" tick={{ fontSize: 11, fill: '#64748B' }} axisLine={false} tickLine={false} />
                 <YAxis tick={{ fontSize: 11, fill: '#64748B' }} axisLine={false} tickLine={false} />
@@ -300,10 +300,10 @@ export const StudentDashboard = () => {
       </div>
 
       {/* 4. Currently Enrolled Courses Table */}
-      <div className="bg-white rounded-3xl p-6 border border-slate-100 shadow-sm">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
+      <div className="bg-white rounded-2xl sm:rounded-3xl p-4 sm:p-6 border border-slate-100 shadow-sm">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-5 sm:mb-6">
           <div>
-            <h3 className="font-bold text-slate-800 text-lg">Currently Registered Courses</h3>
+            <h3 className="font-bold text-slate-800 text-base sm:text-lg">Currently Registered Courses</h3>
             <p className="text-xs text-slate-400">
               Official courses confirmed for {academicSummary?.semesterName || 'Fall 2026'}
             </p>
@@ -312,7 +312,7 @@ export const StudentDashboard = () => {
           {registrations.length > 0 && (
             <button
               onClick={() => setShowSlip(true)}
-              className="px-4 py-2 rounded-full bg-[#2E5A44] hover:bg-[#224333] text-white text-xs font-semibold flex items-center gap-1.5 shadow-xs transition self-start sm:self-auto"
+              className="px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-full bg-[#2E5A44] hover:bg-[#224333] text-white text-xs font-semibold flex items-center gap-1.5 shadow-xs transition self-start sm:self-auto"
             >
               <Printer className="w-3.5 h-3.5" />
               <span>Print Registration Slip</span>
@@ -321,8 +321,8 @@ export const StudentDashboard = () => {
         </div>
 
         {registrations.length === 0 ? (
-          <div className="text-center py-12 bg-slate-50/50 rounded-2xl border border-dashed border-slate-200">
-            <GraduationCap className="w-12 h-12 text-slate-300 mx-auto mb-2" />
+          <div className="text-center py-10 sm:py-12 bg-slate-50/50 rounded-2xl border border-dashed border-slate-200">
+            <GraduationCap className="w-10 h-10 sm:w-12 sm:h-12 text-slate-300 mx-auto mb-2" />
             <h4 className="font-bold text-slate-700 text-sm">No courses registered yet</h4>
             <p className="text-xs text-slate-400 mt-1 mb-4">
               Registration is open. Add courses to your cart and confirm your enrollment.
@@ -336,7 +336,7 @@ export const StudentDashboard = () => {
             </Link>
           </div>
         ) : (
-          <div className="overflow-x-auto">
+          <div className="overflow-x-auto -mx-2 sm:mx-0 px-2 sm:px-0">
             <table className="w-full text-left text-xs">
               <thead>
                 <tr className="border-b border-slate-100 text-slate-400 font-bold uppercase tracking-wider text-[10px]">

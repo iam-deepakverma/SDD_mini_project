@@ -41,27 +41,28 @@ export const Header = ({ onOpenSidebar, title = 'Dashboard' }) => {
   };
 
   return (
-    <header className="flex flex-col md:flex-row md:items-center justify-between gap-4 py-4 px-6 bg-white/70 backdrop-blur-md border-b border-slate-100 rounded-t-3xl sticky top-0 z-30">
+    <header className="flex items-center justify-between gap-2 sm:gap-4 py-2.5 px-3 sm:py-4 sm:px-6 bg-white/90 backdrop-blur-md border-b border-slate-100 rounded-none sm:rounded-t-3xl sticky top-0 z-30">
       {/* Left: Mobile hamburger + Page Title */}
-      <div className="flex items-center gap-3">
+      <div className="flex items-center gap-2 sm:gap-3 min-w-0">
         <button
           onClick={onOpenSidebar}
-          className="p-2 text-slate-500 hover:text-slate-800 rounded-xl hover:bg-slate-100 lg:hidden"
+          className="p-1.5 sm:p-2 text-slate-500 hover:text-slate-800 rounded-xl hover:bg-slate-100 lg:hidden shrink-0"
+          aria-label="Open navigation menu"
         >
           <Menu className="w-5 h-5" />
         </button>
-        <div>
-          <h2 className="text-xl lg:text-2xl font-extrabold text-slate-800 tracking-tight leading-none">
+        <div className="min-w-0">
+          <h2 className="text-base sm:text-xl lg:text-2xl font-extrabold text-slate-800 tracking-tight leading-none truncate">
             {title}
           </h2>
-          <p className="text-xs font-medium text-slate-400 mt-1">
+          <p className="hidden xs:block text-[10px] sm:text-xs font-medium text-slate-400 mt-0.5 sm:mt-1 truncate">
             {currentDate} {academicSummary?.semesterName ? `• ${academicSummary.semesterName}` : ''}
           </p>
         </div>
       </div>
 
       {/* Center: Search Bar (as in reference image) */}
-      <div className="flex-1 max-w-md mx-auto hidden sm:block">
+      <div className="flex-1 max-w-md mx-auto hidden md:block px-2">
         <div className="relative flex items-center">
           <Search className="w-4 h-4 text-slate-400 absolute left-3.5 pointer-events-none" />
           <input
@@ -85,16 +86,17 @@ export const Header = ({ onOpenSidebar, title = 'Dashboard' }) => {
       </div>
 
       {/* Right Controls: Theme switch, Demo Switcher, Notification, User Chip */}
-      <div className="flex items-center gap-2.5 self-end md:self-auto">
+      <div className="flex items-center gap-1.5 sm:gap-2.5 shrink-0">
         {/* Demo Persona Switcher (Convenient for evaluators) */}
         <div className="relative">
           <button
             onClick={() => setShowDemoMenu(!showDemoMenu)}
-            className="px-3 py-1.5 rounded-full bg-[#E8F1EC] text-[#2E5A44] hover:bg-[#d8e7de] text-xs font-semibold flex items-center gap-1.5 transition border border-[#A3C9B4]/60"
+            className="px-2.5 py-1.5 sm:px-3 sm:py-1.5 rounded-full bg-[#E8F1EC] text-[#2E5A44] hover:bg-[#d8e7de] text-[11px] sm:text-xs font-semibold flex items-center gap-1 sm:gap-1.5 transition border border-[#A3C9B4]/60"
             title="Switch demo persona for testing"
           >
-            <GraduationCap className="w-3.5 h-3.5" />
-            <span className="hidden sm:inline">Demo Switcher</span>
+            <GraduationCap className="w-3.5 h-3.5 shrink-0" />
+            <span className="hidden md:inline">Demo Switcher</span>
+            <span className="inline md:hidden">Demo</span>
             <ChevronDown className="w-3 h-3" />
           </button>
 

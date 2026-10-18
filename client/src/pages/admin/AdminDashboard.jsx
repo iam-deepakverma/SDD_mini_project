@@ -71,7 +71,7 @@ export const AdminDashboard = () => {
       />
 
       {/* 4 Stat Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-4">
         <StatCard
           icon={Users}
           iconBg="bg-[#FCEEE9]"
@@ -110,7 +110,7 @@ export const AdminDashboard = () => {
           iconBg="bg-[#EBF8F2]"
           iconColor="text-[#10B981]"
           tagText={stats.totalWaitlistsCount > 0 ? 'Queued' : 'Empty'}
-          tagBg="bg-amber-50 text-amber-700"
+          tagBg={stats.totalWaitlistsCount > 0 ? 'bg-amber-50 text-amber-700' : 'bg-emerald-50 text-emerald-700'}
           label="Waiting List Entries"
           value={stats.totalWaitlistsCount || 0}
           subtext="pending promotions"
@@ -118,9 +118,9 @@ export const AdminDashboard = () => {
       </div>
 
       {/* Analytics Charts (Department Breakdown & Top Courses) */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
         {/* Left 2 Cols: Department Capacity vs Enrolled */}
-        <div className="lg:col-span-2 bg-white rounded-3xl p-6 border border-slate-100 shadow-sm">
+        <div className="lg:col-span-2 bg-white rounded-2xl sm:rounded-3xl p-4 sm:p-6 border border-slate-100 shadow-sm">
           <div className="flex items-center justify-between mb-4">
             <div>
               <h3 className="font-bold text-slate-800 text-base">
@@ -137,7 +137,7 @@ export const AdminDashboard = () => {
 
           <div className="h-64 w-full">
             <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={departmentStats} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+              <BarChart data={departmentStats} margin={{ top: 10, right: 10, left: -25, bottom: 0 }}>
                 <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#F1F5F9" />
                 <XAxis dataKey="department" tick={{ fontSize: 11, fill: '#64748B' }} axisLine={false} tickLine={false} />
                 <YAxis tick={{ fontSize: 11, fill: '#64748B' }} axisLine={false} tickLine={false} />

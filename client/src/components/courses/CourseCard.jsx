@@ -51,7 +51,7 @@ export const CourseCard = ({
     : 0;
 
   return (
-    <div className="bg-white rounded-3xl p-5 border border-slate-100 shadow-sm hover:shadow-md transition-all duration-200 flex flex-col justify-between group">
+    <div className="bg-white rounded-2xl sm:rounded-3xl p-4 sm:p-5 border border-slate-100 shadow-sm hover:shadow-md transition-all duration-200 flex flex-col justify-between group">
       <div>
         {/* Top Header: Code, Category, Credits Badge */}
         <div className="flex items-center justify-between gap-2 mb-3">

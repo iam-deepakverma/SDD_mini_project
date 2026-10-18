@@ -122,8 +122,8 @@ export const CartReviewPage = () => {
       </div>
 
       {selectedCourses.length === 0 && !confirmedRegistrations ? (
-        <div className="bg-white rounded-3xl p-12 text-center border border-slate-100 shadow-sm">
-          <ShoppingBag className="w-12 h-12 text-slate-300 mx-auto mb-3" />
+        <div className="bg-white rounded-2xl sm:rounded-3xl p-6 sm:p-12 text-center border border-slate-100 shadow-sm">
+          <ShoppingBag className="w-10 h-10 sm:w-12 sm:h-12 text-slate-300 mx-auto mb-3" />
           <h3 className="font-bold text-slate-700 text-sm">Your course cart is empty</h3>
           <p className="text-xs text-slate-400 mt-1 mb-5 max-w-sm mx-auto">
             Browse the course catalogue and add courses for the upcoming semester to review them here.
@@ -137,12 +137,12 @@ export const CartReviewPage = () => {
           </Link>
         </div>
       ) : (
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 sm:gap-6">
           {/* Left 2 Cols: Cart Table & Ineligibility Alerts */}
           <div className="lg:col-span-2 space-y-4">
             {/* Credit Limit Alert if Exceeded */}
             {isOverCreditLimit && (
-              <div className="p-4 rounded-2xl bg-rose-50 border border-rose-200 text-rose-900 flex items-start gap-3">
+              <div className="p-3.5 sm:p-4 rounded-2xl bg-rose-50 border border-rose-200 text-rose-900 flex items-start gap-3">
                 <AlertTriangle className="w-5 h-5 text-rose-600 shrink-0 mt-0.5" />
                 <div className="text-xs">
                   <p className="font-bold">Maximum Credit Limit Exceeded</p>
@@ -155,7 +155,7 @@ export const CartReviewPage = () => {
             )}
 
             {/* Selected Courses List */}
-            <div className="bg-white rounded-3xl p-6 border border-slate-100 shadow-sm">
+            <div className="bg-white rounded-2xl sm:rounded-3xl p-4 sm:p-6 border border-slate-100 shadow-sm">
               <h3 className="font-bold text-slate-800 text-base mb-4">
                 Selected Courses ({selectedCourses.length})
               </h3>
@@ -245,7 +245,7 @@ export const CartReviewPage = () => {
 
           {/* Right 1 Col: Summary & Confirmation Card */}
           <div className="space-y-4">
-            <div className="bg-white rounded-3xl p-6 border border-slate-100 shadow-sm space-y-4 sticky top-24">
+            <div className="bg-white rounded-2xl sm:rounded-3xl p-4 sm:p-6 border border-slate-100 shadow-sm space-y-4 sticky top-20 sm:top-24">
               <h3 className="font-bold text-slate-800 text-base">Registration Summary</h3>
 
               <div className="space-y-2.5 text-xs text-slate-600">

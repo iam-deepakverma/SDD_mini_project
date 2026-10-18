@@ -72,10 +72,10 @@ export const WaitlistPage = () => {
         </div>
 
         {/* Tab Switcher */}
-        <div className="flex items-center gap-1 bg-white p-1 rounded-2xl border border-slate-100 shadow-xs self-start sm:self-auto">
+        <div className="flex items-center gap-1 bg-white p-1 rounded-2xl border border-slate-100 shadow-xs w-full sm:w-auto justify-around sm:justify-start">
           <button
             onClick={() => setActiveTab('active')}
-            className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition ${
+            className={`flex-1 sm:flex-initial px-3 py-1.5 rounded-xl text-xs font-semibold transition text-center ${
               activeTab === 'active'
                 ? 'bg-[#2E5A44] text-white shadow-xs'
                 : 'text-slate-500 hover:text-slate-800'
@@ -85,20 +85,20 @@ export const WaitlistPage = () => {
           </button>
           <button
             onClick={() => setActiveTab('enrolled')}
-            className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition ${
+            className={`flex-1 sm:flex-initial px-3 py-1.5 rounded-xl text-xs font-semibold transition text-center ${
               activeTab === 'enrolled'
                 ? 'bg-[#2E5A44] text-white shadow-xs'
                 : 'text-slate-500 hover:text-slate-800'
             }`}
           >
-            Promoted & Enrolled ({enrolledFromWaitlist.length})
+            Promoted ({enrolledFromWaitlist.length})
           </button>
         </div>
       </div>
 
       {/* Promoted Alert Banner if any enrolled courses exist */}
       {enrolledFromWaitlist.length > 0 && activeTab === 'active' && (
-        <div className="p-4 rounded-3xl bg-emerald-50 border border-emerald-200 text-emerald-950 flex items-center justify-between gap-4 shadow-xs">
+        <div className="p-3.5 sm:p-4 rounded-2xl sm:rounded-3xl bg-emerald-50 border border-emerald-200 text-emerald-950 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4 shadow-xs">
           <div className="flex items-center gap-3">
             <div className="w-8 h-8 rounded-xl bg-emerald-600 text-white flex items-center justify-center shrink-0">
               <Sparkles className="w-4 h-4" />
@@ -114,7 +114,7 @@ export const WaitlistPage = () => {
           </div>
           <button
             onClick={() => setActiveTab('enrolled')}
-            className="text-xs font-bold text-emerald-800 underline hover:text-emerald-950 shrink-0"
+            className="text-xs font-bold text-emerald-800 underline hover:text-emerald-950 shrink-0 self-end sm:self-auto"
           >
             View Details
           </button>
@@ -122,7 +122,7 @@ export const WaitlistPage = () => {
       )}
 
       {/* Info Callout */}
-      <div className="p-4 rounded-2xl bg-amber-50/80 border border-amber-200/80 text-amber-900 text-xs flex items-start gap-3">
+      <div className="p-3.5 sm:p-4 rounded-2xl bg-amber-50/80 border border-amber-200/80 text-amber-900 text-xs flex items-start gap-3">
         <Info className="w-5 h-5 text-amber-600 shrink-0 mt-0.5" />
         <div className="space-y-1">
           <p className="font-bold">How Course Waiting Lists Function</p>
@@ -138,23 +138,23 @@ export const WaitlistPage = () => {
           {isLoading ? (
             <div className="space-y-4">
               {[1, 2].map((i) => (
-                <div key={i} className="bg-white rounded-3xl p-6 border border-slate-100 shadow-sm animate-pulse h-28" />
+                <div key={i} className="bg-white rounded-2xl sm:rounded-3xl p-4 sm:p-6 border border-slate-100 shadow-sm animate-pulse h-28" />
               ))}
             </div>
           ) : waitlists.length === 0 ? (
-            <div className="bg-white rounded-3xl p-12 text-center border border-slate-100 shadow-sm">
-              <Clock className="w-12 h-12 text-slate-300 mx-auto mb-3" />
+            <div className="bg-white rounded-2xl sm:rounded-3xl p-8 sm:p-12 text-center border border-slate-100 shadow-sm">
+              <Clock className="w-10 h-10 sm:w-12 sm:h-12 text-slate-300 mx-auto mb-3" />
               <h3 className="font-bold text-slate-700 text-sm">No active waitlist entries</h3>
               <p className="text-xs text-slate-400 mt-1 max-w-sm mx-auto">
                 You are not currently queued for any course. If an eligible course reaches capacity in the catalogue, you can join its waitlist directly.
               </p>
             </div>
           ) : (
-            <div className="space-y-4">
+            <div className="space-y-3 sm:space-y-4">
               {waitlists.map((entry) => (
                 <div
                   key={entry._id}
-                  className="bg-white rounded-3xl p-6 border border-slate-100 shadow-sm hover:shadow-md transition flex flex-col sm:flex-row sm:items-center justify-between gap-4"
+                  className="bg-white rounded-2xl sm:rounded-3xl p-4 sm:p-6 border border-slate-100 shadow-sm hover:shadow-md transition flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4"
                 >
                   <div className="space-y-2">
                     <div className="flex items-center gap-2.5">
