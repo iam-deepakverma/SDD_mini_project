@@ -1,15 +1,25 @@
 # Emedley — Student Course Registration System (MERN Stack)
 
-[![Tests](https://img.shields.io/badge/Vitest-15%2F15%20Passing-brightgreen)](file:///Users/deepakverma/Code/SDD/server/src/tests/registration.test.js)
+[![Tests](https://img.shields.io/badge/Vitest-16%2F16%20Passing-brightgreen)](file:///Users/deepakverma/Code/SDD/server/src/tests/registration.test.js)
+[![Frontend](https://img.shields.io/badge/Vercel-Live%20Demo-black?logo=vercel)](https://sdd-mini-project-xi.vercel.app)
+[![Backend](https://img.shields.io/badge/Render-API%20Online-46e3b7?logo=render)](https://sdd-mini-project.onrender.com)
 [![MERN Stack](https://img.shields.io/badge/Stack-MongoDB%20%7C%20Express%20%7C%20React%20%7C%20Node-blue)](#tech-stack)
 [![Tailwind CSS](https://img.shields.io/badge/Styling-Tailwind%20CSS-38bdf8)](file:///Users/deepakverma/Code/SDD/client/src/index.css)
-[![Node](https://img.shields.io/badge/Node-v20%2B-green)](#quick-start)
+[![Mobile Optimized](https://img.shields.io/badge/Mobile-Fully%20Responsive-orange)](#mobile-first-experience)
 
-> A modern academic course registration and student management portal designed with the **Emedley Education & Analytics** design system. Features real-time prerequisite verification, atomic concurrency-safe seat allocation, credit ceiling enforcement, interactive waiting lists, printable verified registration slips, and comprehensive administrator analytics.
+> A modern, responsive academic course registration and student management portal designed with the **Emedley Education & Analytics** design system. Features real-time prerequisite verification, atomic concurrency-safe seat allocation, credit ceiling enforcement, event-driven synchronized waiting lists, printable verified registration slips, and comprehensive administrator analytics.
 
 ---
 
-## 1. Visual Theme & Design Alignment
+## 🌐 Live Deployments
+
+- **Frontend (Vercel)**: [https://sdd-mini-project-xi.vercel.app](https://sdd-mini-project-xi.vercel.app)
+- **Backend API (Render)**: [https://sdd-mini-project.onrender.com](https://sdd-mini-project.onrender.com)
+- **Health Check Probe**: [https://sdd-mini-project.onrender.com/api/health](https://sdd-mini-project.onrender.com/api/health)
+
+---
+
+## 1. Visual Theme & Mobile-First Experience
 
 This application reproduces the design language of the **Emedley Education & Performance Dashboard**:
 
@@ -20,9 +30,14 @@ This application reproduces the design language of the **Emedley Education & Per
   - **Serene Sage Canvas**: `#EAEFEA` background canvas with floating white cards (`rounded-3xl`, `shadow-sm`, border `#E5EAE7`)
 - **Key UI Components**:
   - **Top Hero Gradient Banner**: Bronze-to-forest-green gradient (`linear-gradient(135deg, #c78652, #477053, #254F3B)`), live semester badge, and 3D visual status widget.
-  - **4 High-Impact Metric Cards**: Circular icon backdrops (peach, forest green, charcoal, mint), bold numbers, category pill tags, and clear labels.
+  - **High-Impact Metric Cards**: Circular icon backdrops (peach, forest green, charcoal, mint), bold numbers, category pill tags, and clear labels.
   - **Interactive Analytics**: Department capacity vs enrollment breakdown and credit allocation charts built with **Recharts**.
   - **Official Printable Slip**: Verified enrollment confirmation document with university crest, simulated authentic barcode, student details, course table, and registrar signature block.
+- **Mobile Phone Optimization**:
+  - **Fixed Mobile Bottom Navigation (`MobileBottomNav`)**: Ergonomic thumb navigation for mobile screens with real-time selection cart badge counter.
+  - **Responsive Layout Grids**: Stat cards adapt fluidly into a 2x2 mobile matrix with proportional typography (`text-xl` to `text-3xl`).
+  - **Slide-Out Mobile Drawer**: Off-canvas navigation with backdrop blur and touch dismiss.
+  - **Safe Area Insets**: Handled with `pb-24 lg:pb-8` to ensure content is never obscured by mobile browser chrome.
 
 ---
 
@@ -48,7 +63,22 @@ This application reproduces the design language of the **Emedley Education & Per
 
 ---
 
-## 3. Core Business Rules Engine
+## 3. Real-Time Event-Driven Sync & Performance Architecture
+
+- **Event-Driven Cross-Tab Synchronization**:
+  - Uses the browser's native `BroadcastChannel('emedley_sync_channel')` paired with local `storage` event pings.
+  - When an administrator promotes a waiting student to enrolled, or when a student registers or cancels, all open tabs and dashboards synchronize instantly.
+- **Zero-Poll, Flicker-Free UI**:
+  - Aggressive timer polling and window-focus listeners have been replaced with event-driven updates.
+  - Background synchronizations update state smoothly in-place without flashing skeleton placeholders or disrupting scrolling.
+- **Debounced Search**:
+  - Catalogue and student directory search bars employ a 300ms debounce to prevent redundant backend network requests during keystrokes.
+- **Smart Rate Limiting**:
+  - Extended to a 1-hour window with 1,000 requests max, proxy-trust enabled for cloud hosts, and session checks (`/api/auth/me`) exempted from limiting.
+
+---
+
+## 4. Core Business Rules Engine
 
 | Rule # | Business Requirement | Server-Side Enforcement Location |
 |---|---|---|
@@ -60,61 +90,58 @@ This application reproduces the design language of the **Emedley Education & Per
 | **6** | No over-enrollment permitted beyond class capacity | `Course.findOneAndUpdate` with atomic `$expr: { $lt: ['$enrolledCount', '$capacity'] }` |
 | **7** | Registration permitted only during open window | `RegistrationService.checkRegistrationWindow` (Dates & boolean toggle) |
 | **8** | Full courses accept waitlist entries only when enabled | `RegistrationService.joinWaitlist` (Queue positioning & duplicate prevention) |
-| **9** | Course cancellation adheres to university drop policies | `RegistrationService.cancelRegistration` (Safely decrements enrolled count) |
-| **10** | Concurrent attempts for last seat handled safely | Tested with simultaneous asynchronous requests; zero over-enrollment |
+| **9** | Admin waitlist acceptance automatically enrolls student | `RegistrationService.promoteFromWaitlist` (Atomic enrollment + waitlist status update) |
+| **10** | Course cancellation adheres to university drop policies | `RegistrationService.cancelRegistration` (Safely decrements enrolled count) |
+| **11** | Concurrent attempts for last seat handled safely | Tested with simultaneous asynchronous requests; zero over-enrollment |
 
 ---
 
-## 4. Tech Stack
+## 5. Tech Stack
 
 - **Frontend**: React 19, Vite, Tailwind CSS v4, Lucide React icons, Recharts, React Hot Toast, Axios.
 - **Backend**: Node.js, Express.js (ES modules), Mongoose ODM, JWT authentication, Bcrypt.js password hashing, Cookie Parser, Morgan.
-- **Database**: MongoDB with Mongoose (with out-of-the-box auto-fallback to embedded `mongodb-memory-server` for zero-setup local execution).
-- **Testing**: Vitest & Supertest (15 automated end-to-end tests covering auth, prereqs, concurrency, and waitlists).
+- **Database**: MongoDB Atlas cloud cluster with automatic zero-setup fallback to embedded `mongodb-memory-server` for local offline development.
+- **Testing**: Vitest & Supertest (16 automated end-to-end integration tests covering auth, prereqs, concurrency, waitlists, and dashboard synchronization).
 
 ---
 
-## 5. Quick Start & Local Setup
+## 6. Quick Start & Local Setup
 
 ### Prerequisites
-- Node.js `v18+` or `v20+` (tested on `v24.15.0`)
+- Node.js `v18+`, `v20+`, or `v24+`
 - npm `v9+` or `v11+`
 
-### Step 1: Install Dependencies
-From the repository root:
+### Step 1: Clone & Install Dependencies
 ```bash
-# Install root orchestration dependencies
-npm install
+git clone https://github.com/iam-deepakverma/SDD_mini_project.git
+cd SDD_mini_project
 
-# Install client dependencies
-cd client && npm install && cd ..
-
-# Install server dependencies
-cd server && npm install && cd ..
+# Install root, client, and server dependencies
+npm run install:all
 ```
 
 ### Step 2: Environment Configuration
-The repository includes preconfigured `.env` and `.env.example` files.
-By default, `MONGODB_URI` is left blank, which triggers the backend's **zero-setup embedded MongoDB instance** so the portal runs immediately without requiring local Docker or MongoDB services!
+The repository includes preconfigured `.env` files.
+By default, if `MONGODB_URI` is left blank, the backend automatically boots an **embedded in-memory MongoDB server** so you can run the project immediately with zero database installation.
 
-If you wish to connect to an external MongoDB instance or MongoDB Atlas:
+To connect to MongoDB Atlas or a local MongoDB service:
 Edit `server/.env`:
 ```env
 PORT=5001
 NODE_ENV=development
-MONGODB_URI=mongodb://localhost:27017/student_course_reg
+MONGODB_URI=mongodb+srv://<username>:<password>@cluster.mongodb.net/emedley?retryWrites=true&w=majority
 JWT_SECRET=super_secret_jwt_key_emedley_course_portal_2026
 JWT_EXPIRES_IN=7d
 CLIENT_URL=http://localhost:5173
 ```
 
 ### Step 3: Run the Application
-You can run both client and server concurrently with one command from the root:
+Run both client and server concurrently with one command:
 ```bash
 npm run dev
 ```
 
-Or run them individually in separate terminal windows:
+Or run them individually in separate terminals:
 ```bash
 # Terminal 1: Backend Server (Port 5001)
 npm run server
@@ -127,52 +154,52 @@ Open your browser at: **`http://localhost:5173`**
 
 ---
 
-## 6. Pre-Seeded Demo Accounts & Evaluator Personas
+## 7. Pre-Seeded Demo Accounts & Evaluator Personas
 
-The portal automatically seeds realistic academic records on startup. You can sign in using credentials or use the **"One-Click Demo Personas"** buttons on the login page or the **"Demo Switcher"** pill in the top header:
+The portal automatically seeds realistic academic records on startup. You can sign in using credentials or use the **"Demo Switcher"** pill in the top header:
 
 | Persona | Name | Email | Password | Role | Academic Status & Purpose |
 |---|---|---|---|---|---|
 | 🎓 **Student (Eligible)** | Alex Mercer | `alex.student@emedley.edu` | `Password123!` | Student | Junior CS. Has completed `CS101`, `CS201`, `MATH201`. Eligible to register for `CS301` and `CS305`. |
-| ⚠️ **Student (Missing Prereq)** | Maya Chen | `maya.student@emedley.edu` | `Password123!` | Student | Sophomore CS. Has completed `CS101`, but **missing `CS201`**. Demonstrates prerequisite blocking on `CS301`. |
-| ⚡ **Student (High Credits)** | Jordan Hayes | `jordan.student@emedley.edu` | `Password123!` | Student | Senior CS. High completed credit load. Demonstrates credit ceiling warnings. |
-
+| ⚠️ **Student (Missing Prereq)** | Maya Chen | `maya.student@emedley.edu` | `Password123!` | Student | Sophomore CS. Missing `CS201`. Demonstrates prerequisite blocking on `CS301`. |
+| ⚡ **Student (High Credits)** | Jordan Hayes | `jordan.student@emedley.edu` | `Password123!` | Student | Senior CS. Near credit limit. Demonstrates credit ceiling warnings. |
+| 👑 **Administrator** | Sarah Lin | `admin@emedley.edu` | `Password123!` | Admin | Dean of Registry. Full access to analytics, courses, waitlist promotion, and student records. |
 
 ---
 
-## 7. Automated Test Suite
+## 8. Automated Test Suite
 
 Run the full end-to-end test suite:
 ```bash
 npm run test
 ```
 
-### Test Coverage Summary:
+### Test Coverage Summary (16/16 Passing):
 ```text
-✓ 1. Authentication & Role Authorization > should authenticate user with valid credentials
-✓ 1. Authentication & Role Authorization > should reject login with invalid password
-✓ 1. Authentication & Role Authorization > should block student from accessing admin-only routes
-✓ 1. Authentication & Role Authorization > should allow admin to access admin routes
-✓ 2. Course Catalogue & Search > should return courses with search and filtering
-✓ 3. Core Registration Workflows & Business Rules > should successfully register eligible student for a course with prerequisites satisfied
-✓ 3. Core Registration Workflows & Business Rules > should block registration if student is missing prerequisites
-✓ 3. Core Registration Workflows & Business Rules > should block duplicate course registration in same semester
-✓ 3. Core Registration Workflows & Business Rules > should block registration if credit limit is exceeded
-✓ 3. Core Registration Workflows & Business Rules > should block registration when course is full
-✓ 3. Core Registration Workflows & Business Rules > should block registration when registration window is closed
-✓ 4. Waiting List Lifecycle > should allow eligible student to join waiting list for full course
-✓ 4. Waiting List Lifecycle > should allow new student to join waitlist and assign next position
-✓ 5. Course Cancellation Rules > should allow student to cancel registered course and decrement enrolledCount
-✓ 6. Concurrency & Race Condition Guard > should safely handle concurrent registrations for the last seat without over-enrollment
+ ✓ 1. Authentication & Role Authorization > should authenticate user with valid credentials
+ ✓ 1. Authentication & Role Authorization > should reject login with invalid password
+ ✓ 1. Authentication & Role Authorization > should block student from accessing admin-only routes
+ ✓ 1. Authentication & Role Authorization > should allow admin to access admin routes
+ ✓ 2. Course Catalogue & Search > should return courses with search and filtering
+ ✓ 3. Core Registration Workflows & Business Rules > should successfully register eligible student for a course with prerequisites satisfied
+ ✓ 3. Core Registration Workflows & Business Rules > should block registration if student is missing prerequisites
+ ✓ 3. Core Registration Workflows & Business Rules > should block duplicate course registration in same semester
+ ✓ 3. Core Registration Workflows & Business Rules > should block registration if credit limit is exceeded
+ ✓ 3. Core Registration Workflows & Business Rules > should block registration when course is full
+ ✓ 3. Core Registration Workflows & Business Rules > should block registration when registration window is closed
+ ✓ 4. Waiting List Lifecycle > should allow eligible student to join waiting list for full course
+ ✓ 4. Waiting List Lifecycle > should allow new student to join waitlist and assign next position
+ ✓ 4. Waiting List Lifecycle > should enroll student, remove them from waiting list, and reflect on student & admin dashboards when admin accepts waitlist
+ ✓ 5. Course Cancellation Rules > should allow student to cancel registered course and decrement enrolledCount
+ ✓ 6. Concurrency & Race Condition Guard > should safely handle concurrent registrations for the last seat without over-enrollment
 
 Test Files  1 passed (1)
-Tests       15 passed (15)
-Duration    7.22s
+Tests       16 passed (16)
 ```
 
 ---
 
-## 8. REST API Reference
+## 9. REST API Reference
 
 ### Authentication (`/api/auth`)
 - `POST /api/auth/register` — Register a new student account
@@ -211,19 +238,19 @@ Duration    7.22s
 
 ---
 
-## 9. Project Structure
+## 10. Project Structure
 
 ```
 course-registration-system/
 ├── client/
 │   ├── src/
-│   │   ├── api/             # Axios client with interceptors
+│   │   ├── api/             # Axios client with dev proxy & Render fallback
 │   │   ├── components/
 │   │   │   ├── common/      # Badge, StatCard, TopBanner, ConfirmationDialog, ProtectedRoute
 │   │   │   ├── courses/     # CourseCard, CourseFilters, CourseDetailModal
-│   │   │   ├── layout/      # Sidebar, Header, AppLayout
+│   │   │   ├── layout/      # Sidebar, Header, AppLayout, MobileBottomNav
 │   │   │   └── registration/# PrintableRegistrationSlip
-│   │   ├── context/         # AuthContext, CartContext
+│   │   ├── context/         # AuthContext (cross-tab sync), CartContext
 │   │   ├── pages/
 │   │   │   ├── admin/       # Dashboard, Courses, Students, Registrations, Waitlists, Settings
 │   │   │   ├── auth/        # LoginPage, RegisterPage
@@ -231,22 +258,23 @@ course-registration-system/
 │   │   ├── App.jsx          # React Router route definitions
 │   │   ├── index.css        # Tailwind CSS design tokens & print styling
 │   │   └── main.jsx
+│   ├── vercel.json          # SPA routing rewrites for Vercel deployment
 │   ├── index.html           # Google Fonts & portal metadata
 │   └── vite.config.js       # Vite config with API proxy
 ├── server/
 │   ├── scripts/
 │   │   └── seed.js          # Realistic demo dataset with admin, students & courses
 │   ├── src/
-│   │   ├── config/          # MongoDB connection with embedded fallback
+│   │   ├── config/          # MongoDB Atlas connection with embedded fallback
 │   │   ├── controllers/     # Auth, Course, Registration, Waitlist, Student, Admin controllers
 │   │   ├── middleware/      # JWT auth, role authorization, rate limiting
 │   │   ├── models/          # User, Course, Registration, Waitlist, SystemSetting
 │   │   ├── routes/          # Express route definitions
 │   │   ├── services/        # RegistrationService (Atomic checks, prerequisites, credit limiter)
-│   │   ├── tests/           # Vitest end-to-end integration tests
+│   │   ├── tests/           # Vitest end-to-end integration tests (16 tests)
 │   │   ├── utils/           # Reference generator, CSV exporter
-│   │   ├── app.js           # Express app setup
-│   │   └── server.js        # Server entry point with auto-seeding
+│   │   ├── app.js           # Express app setup with root probe & health check
+│   │   └── server.js        # Server entry point with 0.0.0.0 binding & auto-seeding
 │   └── package.json
 ├── .env.example
 ├── .gitignore
@@ -256,5 +284,32 @@ course-registration-system/
 
 ---
 
-## 10. License
-Academic Mini Project — Created for demonstration of full-stack MERN development, robust database architecture, and UI/UX design.
+## 11. Deployment Guide
+
+### Deploying to Render (Backend)
+1. In the [Render Dashboard](https://dashboard.render.com), create a new **Web Service** connected to this repository.
+2. Configure settings:
+   - **Root Directory**: `server`
+   - **Build Command**: `npm install` *(Important: do not append `npm start` here)*
+   - **Start Command**: `npm start`
+   - **Environment Variables**:
+     - `NODE_ENV`: `production`
+     - `MONGODB_URI`: `mongodb+srv://<username>:<password>@cluster.mongodb.net/emedley?retryWrites=true&w=majority`
+     - `JWT_SECRET`: `your_secure_random_key`
+     - `JWT_EXPIRES_IN`: `7d`
+     - `CLIENT_URL`: `https://sdd-mini-project-xi.vercel.app`
+
+### Deploying to Vercel (Frontend)
+1. In the [Vercel Dashboard](https://vercel.com), import this repository.
+2. Configure settings:
+   - **Root Directory**: `client`
+   - **Build Command**: `npm run build`
+   - **Output Directory**: `dist`
+   - **Environment Variables**:
+     - `VITE_API_URL`: `https://sdd-mini-project.onrender.com/api`
+3. Single-Page Application rewrites are automatically handled by [`client/vercel.json`](file:///Users/deepakverma/Code/SDD/client/vercel.json).
+
+---
+
+## 12. License
+Academic Mini Project — Created for demonstration of full-stack MERN development, robust database architecture, atomic concurrency handling, and modern UI/UX design.
