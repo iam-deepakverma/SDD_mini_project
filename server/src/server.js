@@ -19,9 +19,9 @@ const startServer = async () => {
       await seedDatabase();
     }
 
-    const server = app.listen(PORT, () => {
+    const server = app.listen(PORT, '0.0.0.0', () => {
       console.log(`🚀 [Server] Running in ${process.env.NODE_ENV || 'development'} mode on port ${PORT}`);
-      // console.log(`🔗 [API] Health check available at: http://localhost:${PORT}/api/health`);
+      console.log(`🔗 [API] Health check available at: http://0.0.0.0:${PORT}/api/health`);
     });
 
     const shutdown = async (signal) => {

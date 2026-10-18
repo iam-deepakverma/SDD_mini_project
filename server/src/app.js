@@ -70,6 +70,16 @@ if (process.env.NODE_ENV !== 'test') {
   app.use(morgan('dev'));
 }
 
+// Root Service Probe & Info
+app.get('/', (req, res) => {
+  res.status(200).json({
+    status: 'online',
+    service: 'Student Course Registration System API',
+    healthCheck: '/api/health',
+    timestamp: new Date().toISOString(),
+  });
+});
+
 // Health Check
 app.get('/api/health', (req, res) => {
   res.status(200).json({
