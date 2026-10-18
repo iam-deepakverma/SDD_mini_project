@@ -31,11 +31,20 @@ export const StudentManagementPage = () => {
   const [newCompletedSem, setNewCompletedSem] = useState(2);
   const [isUpdating, setIsUpdating] = useState(false);
 
+  // Debounced search to prevent rapid queries on keystrokes
+  const [debouncedSearch, setDebouncedSearch] = useState(search);
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedSearch(search);
+    }, 300);
+    return () => clearTimeout(timer);
+  }, [search]);
+
   const fetchStudents = async (showLoading = false) => {
-    if (showLoading) setIsLoading(true);
+    if (showLoading && students.length === 0) setIsLoading(true);
     try {
       const [studentsRes, coursesRes] = await Promise.all([
-        api.get(`/students?search=${encodeURIComponent(search)}`),
+        api.get(`/students?search=${encodeURIComponent(debouncedSearch)}`),
         api.get('/courses?limit=100'),
       ]);
 
@@ -53,8 +62,14 @@ export const StudentManagementPage = () => {
   };
 
   useEffect(() => {
-    fetchStudents(true);
-  }, [search, dataVersion]);
+    fetchStudents(students.length === 0);
+  }, [debouncedSearch]);
+
+  useEffect(() => {
+    if (dataVersion > 0) {
+      fetchStudents(false);
+    }
+  }, [dataVersion]);
 
   const openRecordModal = (student) => {
     setSelectedStudent(student);

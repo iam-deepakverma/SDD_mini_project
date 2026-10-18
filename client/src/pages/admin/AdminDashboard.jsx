@@ -34,7 +34,7 @@ export const AdminDashboard = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   const fetchDashboard = async (showLoading = false) => {
-    if (showLoading) setIsLoading(true);
+    if (showLoading && !data) setIsLoading(true);
     try {
       const res = await api.get('/admin/dashboard');
       if (res.data.success) {
@@ -49,6 +49,12 @@ export const AdminDashboard = () => {
 
   useEffect(() => {
     fetchDashboard(true);
+  }, []);
+
+  useEffect(() => {
+    if (dataVersion > 0) {
+      fetchDashboard(false);
+    }
   }, [dataVersion]);
 
   const stats = data?.stats || {};

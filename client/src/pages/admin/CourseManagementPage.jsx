@@ -52,7 +52,7 @@ export const CourseManagementPage = () => {
   const [isDeleting, setIsDeleting] = useState(false);
 
   const fetchCourses = async (showLoading = false) => {
-    if (showLoading) setIsLoading(true);
+    if (showLoading && courses.length === 0) setIsLoading(true);
     try {
       const res = await api.get('/courses?includeInactive=true&limit=100');
       if (res.data.success) {
@@ -68,6 +68,12 @@ export const CourseManagementPage = () => {
 
   useEffect(() => {
     fetchCourses(true);
+  }, []);
+
+  useEffect(() => {
+    if (dataVersion > 0) {
+      fetchCourses(false);
+    }
   }, [dataVersion]);
 
   const openCreateModal = () => {

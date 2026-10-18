@@ -32,11 +32,20 @@ export const CourseCataloguePage = () => {
   const [waitlistTarget, setWaitlistTarget] = useState(null);
   const [isJoiningWaitlist, setIsJoiningWaitlist] = useState(false);
 
+  // Debounced search to prevent rapid network calls on keystrokes
+  const [debouncedSearch, setDebouncedSearch] = useState(search);
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedSearch(search);
+    }, 300);
+    return () => clearTimeout(timer);
+  }, [search]);
+
   const fetchCourses = async (showLoading = false) => {
-    if (showLoading) setIsLoading(true);
+    if (showLoading && courses.length === 0) setIsLoading(true);
     try {
       const params = new URLSearchParams();
-      if (search) params.append('search', search);
+      if (debouncedSearch) params.append('search', debouncedSearch);
       if (department !== 'All') params.append('department', department);
       if (credits !== 'All') params.append('credits', credits);
       if (availability !== 'all') params.append('availability', availability);
@@ -69,8 +78,14 @@ export const CourseCataloguePage = () => {
   };
 
   useEffect(() => {
-    fetchCourses(true);
-  }, [search, department, credits, availability, sortBy, dataVersion]);
+    fetchCourses(courses.length === 0);
+  }, [debouncedSearch, department, credits, availability, sortBy]);
+
+  useEffect(() => {
+    if (dataVersion > 0) {
+      fetchCourses(false);
+    }
+  }, [dataVersion]);
 
   const handleJoinWaitlistConfirm = async () => {
     if (!waitlistTarget) return;

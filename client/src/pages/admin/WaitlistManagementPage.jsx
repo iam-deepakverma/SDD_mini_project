@@ -24,7 +24,7 @@ export const WaitlistManagementPage = () => {
   const [isOffering, setIsOffering] = useState(false);
 
   const fetchWaitlists = async (showLoading = false) => {
-    if (showLoading) setIsLoading(true);
+    if (showLoading && waitlists.length === 0) setIsLoading(true);
     try {
       const res = await api.get(`/waitlists/admin?status=${status}`);
       if (res.data.success) {
@@ -38,8 +38,14 @@ export const WaitlistManagementPage = () => {
   };
 
   useEffect(() => {
-    fetchWaitlists(true);
-  }, [status, dataVersion]);
+    fetchWaitlists(waitlists.length === 0);
+  }, [status]);
+
+  useEffect(() => {
+    if (dataVersion > 0) {
+      fetchWaitlists(false);
+    }
+  }, [dataVersion]);
 
   const handleOfferSeat = async () => {
     if (!offeringEntry) return;

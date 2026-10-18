@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || 'https://sdd-mini-project.onrender.com/api',
+  baseURL: import.meta.env.VITE_API_URL || (import.meta.env.DEV ? '/api' : 'https://sdd-mini-project.onrender.com/api'),
   withCredentials: true,
   headers: {
     'Content-Type': 'application/json',

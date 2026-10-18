@@ -46,26 +46,11 @@ export const AuthProvider = ({ children }) => {
     return () => window.removeEventListener('storage', handleStorageChange);
   }, []);
 
-  // Re-fetch on window focus to ensure fresh state
-  useEffect(() => {
-    const handleFocus = () => {
-      setDataVersion((v) => v + 1);
-      refreshUser();
-    };
-    window.addEventListener('focus', handleFocus);
-    return () => window.removeEventListener('focus', handleFocus);
-  }, []);
 
-  // Periodic lightweight heartbeat poll (every 4 seconds) to ensure real-time cross-client sync
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setDataVersion((v) => v + 1);
-      refreshUser();
-    }, 4000);
-    return () => clearInterval(interval);
-  }, []);
 
   const refreshUser = useCallback(async () => {
+    const token = localStorage.getItem('emedley_token');
+    if (!token) return;
     try {
       const res = await api.get('/auth/me');
       if (res.data.success) {

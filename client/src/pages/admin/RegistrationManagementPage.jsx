@@ -32,7 +32,7 @@ export const RegistrationManagementPage = () => {
   const [isCancelling, setIsCancelling] = useState(false);
 
   const fetchRegistrations = async (showLoading = false) => {
-    if (showLoading) setIsLoading(true);
+    if (showLoading && registrations.length === 0) setIsLoading(true);
     try {
       const params = new URLSearchParams();
       if (status !== 'all') params.append('status', status);
@@ -51,8 +51,14 @@ export const RegistrationManagementPage = () => {
   };
 
   useEffect(() => {
-    fetchRegistrations(true);
-  }, [status, semester, dataVersion]);
+    fetchRegistrations(registrations.length === 0);
+  }, [status, semester]);
+
+  useEffect(() => {
+    if (dataVersion > 0) {
+      fetchRegistrations(false);
+    }
+  }, [dataVersion]);
 
   const handleExportCSV = async () => {
     try {

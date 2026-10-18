@@ -19,7 +19,7 @@ export const WaitlistPage = () => {
   const [isLeaving, setIsLeaving] = useState(false);
 
   const fetchWaitlists = async (showLoading = false) => {
-    if (showLoading) setIsLoading(true);
+    if (showLoading && waitlists.length === 0) setIsLoading(true);
     try {
       const res = await api.get('/waitlists/me?status=all');
       if (res.data.success) {
@@ -36,8 +36,14 @@ export const WaitlistPage = () => {
   };
 
   useEffect(() => {
-    fetchWaitlists(true);
-  }, [user?._id, dataVersion]);
+    fetchWaitlists(waitlists.length === 0);
+  }, [user?._id]);
+
+  useEffect(() => {
+    if (dataVersion > 0) {
+      fetchWaitlists(false);
+    }
+  }, [dataVersion]);
 
   const handleLeaveWaitlist = async () => {
     if (!leavingEntry) return;

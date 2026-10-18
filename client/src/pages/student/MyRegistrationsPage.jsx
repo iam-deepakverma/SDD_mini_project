@@ -30,7 +30,7 @@ export const MyRegistrationsPage = () => {
   const [isCancelling, setIsCancelling] = useState(false);
 
   const fetchRegistrations = async (showLoading = false) => {
-    if (showLoading) setIsLoading(true);
+    if (showLoading && registrations.length === 0) setIsLoading(true);
     try {
       const res = await api.get(`/registrations/me?status=${statusFilter}`);
       if (res.data.success) {
@@ -44,8 +44,14 @@ export const MyRegistrationsPage = () => {
   };
 
   useEffect(() => {
-    fetchRegistrations(true);
-  }, [statusFilter, user?._id, dataVersion]);
+    fetchRegistrations(registrations.length === 0);
+  }, [statusFilter, user?._id]);
+
+  useEffect(() => {
+    if (dataVersion > 0) {
+      fetchRegistrations(false);
+    }
+  }, [dataVersion]);
 
   const handleCancelRegistration = async () => {
     if (!cancellingRegistration) return;

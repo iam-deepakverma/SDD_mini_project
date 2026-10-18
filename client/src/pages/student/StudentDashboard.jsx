@@ -49,7 +49,7 @@ export const StudentDashboard = () => {
   const [showSlip, setShowSlip] = useState(false);
 
   const fetchData = async (showLoading = false) => {
-    if (showLoading) setIsLoading(true);
+    if (showLoading && registrations.length === 0) setIsLoading(true);
     try {
       const [regRes, waitRes] = await Promise.all([
         api.get('/registrations/me?status=registered'),
@@ -71,8 +71,14 @@ export const StudentDashboard = () => {
   };
 
   useEffect(() => {
-    fetchData(true);
-  }, [user?._id, dataVersion]);
+    fetchData(registrations.length === 0);
+  }, [user?._id]);
+
+  useEffect(() => {
+    if (dataVersion > 0) {
+      fetchData(false);
+    }
+  }, [dataVersion]);
 
   const handleCancelRegistration = async () => {
     if (!cancellingRegistration) return;
