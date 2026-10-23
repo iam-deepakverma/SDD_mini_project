@@ -21,6 +21,7 @@ const startServer = async () => {
 
     const server = app.listen(PORT, '0.0.0.0', () => {
       console.log(`🚀 [Server] Running in ${process.env.NODE_ENV || 'development'} mode on port ${PORT}`);
+      console.log('NODE_ENV:', process.env.NODE_ENV);
       console.log(`🔗 [API] Health check available at: http://0.0.0.0:${PORT}/api/health`);
     });
 
