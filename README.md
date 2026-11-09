@@ -13,9 +13,13 @@
 
 ## 🌐 Live Deployments
 
-- **Frontend (Vercel)**: [https://sdd-mini-project-xi.vercel.app](https://sdd-mini-project-xi.vercel.app)
-- **Backend API (Render)**: [https://sdd-mini-project.onrender.com](https://sdd-mini-project.onrender.com)
-- **Health Check Probe**: [https://sdd-mini-project.onrender.com/api/health](https://sdd-mini-project.onrender.com/api/health)
+- **Live Deployments**:
+  - **Frontend (Vercel)**: [https://sdd-mini-project-xi.vercel.app](https://sdd-mini-project-xi.vercel.app)
+  - **Backend API (Render)**: [https://sdd-mini-project.onrender.com](https://sdd-mini-project.onrender.com)
+  - **Health Check Probe**: [https://sdd-mini-project.onrender.com/api/health](https://sdd-mini-project.onrender.com/api/health)
+- **UI Design & Screen Specifications**:
+  - [**UI Screens Documentation (`docs/UI_SCREENS.md`)**](docs/UI_SCREENS.md)
+  - [**Interactive 5-Screen UI Showcase (`docs/ui_screens_showcase.html`)**](docs/ui_screens_showcase.html)
 
 ---
 
